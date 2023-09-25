@@ -1,0 +1,40 @@
+MYSQL----
+mvn clean install -DskipTests
+
+docker pull mysql
+docker pull --platform linux/x86_64 mysql
+
+
+docker run --name mysqldb --network springboot-mysql-net -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=expensetracker -e MYSQL_USER=sa -e MYSQL_PASSWORD=1234 -d mysql
+
+docker exec -it 5762b806d667 bash -- Para entrar a un contenedor
+
+
+spring.datasource.url=jdbc:mysql://172.17.0.2:3306/expensetracker
+spring.datasource.username=sa
+spring.datasource.password=1234
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+
+
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.username=${DATABASE_USERNAME}
+spring.datasource.password=${DATABASE_PASSWORD}
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+
+SPRINGBOOT----
+
+docker build -t springbootmysql
+
+docker run --network springboot-mysql-net --name springboot-container -p 8080:8080 -d dockerspring
+
+id,
+date_start,
+date_new
+price,
+exchange
+
+
