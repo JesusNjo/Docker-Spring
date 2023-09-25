@@ -1,0 +1,27 @@
+JAVA
+FROM openjdk:17
+VOLUME /tmp
+ADD target/cotizacion-0.0.1-SNAPSHOT.jar cotizacion.jar
+ARG JAR_FILE=target/*.jar
+COPY ./target/cotizacion-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+
+
+docker build -t springapi .
+docker run -p 8000:8080 springapi
+
+MYSQL
+
+mysql -u root -h 172.18.0.2 -proot
+docker run --name database -e MYSQL_ROOT_PASSWORD=root -d mysql
+
+
+CREATE TABLE cotizaciones (
+    id int,
+    date VARCHAR(150),
+    price int,
+    exchange VARCHAR(50)
+   
+);
+
+INSERT INTO cotizaciones(id,date,price,exchange) values (1,"04-01-1994",200,"PARALELO");
